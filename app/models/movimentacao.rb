@@ -2,6 +2,8 @@ class Movimentacao < ApplicationRecord
 
   enum :tipo, { saida: 'saida', entrada: 'entrada' }
 
+  belongs_to :usuario
+
   validates :data, comparison: { less_than_or_equal_to: proc { Date.current } }
   validates :descricao, presence: true
   validates :descricao, length: { maximum: 150 }
@@ -17,8 +19,9 @@ class Movimentacao < ApplicationRecord
   end
 
   def valida_se_existe_saldo
+    return unless usuario
     return if entrada?
-    return if valor.to_f <= Movimentacao.saldo_atual
+    return if valor.to_f <= usuario.movimentacoes.saldo_atual
     
     errors.add :valor, 'Não há saldo suficiente'
   end

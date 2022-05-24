@@ -5,6 +5,7 @@
 # locales as you wish. All of these examples are active by default:
 ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular "movimentacao", "movimentacoes"
+  # inflect.irregular "usuario", "usuarios"
 
 end
 
